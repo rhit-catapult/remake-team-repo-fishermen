@@ -1,6 +1,6 @@
 import pygame
 import sys
-import my_character
+import batting_system
 import random
 import time
 
@@ -14,7 +14,7 @@ def main():
     # TODO: Change the size of the screen as you see fit!
     screen = pygame.display.set_mode((1000, 750))
     # creates a Character from the my_character.py file
-    character = my_character.Character(screen, 100, 100)
+    bs = batting_system.BattingSystem(screen)
 
     # let's set the framerate
     clock = pygame.time.Clock()
@@ -31,8 +31,7 @@ def main():
         screen.fill((255, 255, 255))
 
         # draws the character every frame
-        character.draw()
-        pygame.draw.rect(screen, (220,220,220), (50,475,120,120))
+        bs.draw()
         # TODO: Add your project code
 
         # don't forget the update, otherwise nothing will show up!
@@ -41,6 +40,3 @@ def main():
 
 
 main()
-class Battingsystem:
-    def __init__(self,screen):
-        pass
