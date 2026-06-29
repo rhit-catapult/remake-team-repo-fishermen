@@ -13,7 +13,7 @@ def main():
     # create a screen
     pygame.display.set_caption("Cool Project")
     # TODO: Change the size of the screen as you see fit!
-    screen = pygame.display.set_mode((1000, 750))
+    screen = pygame.display.set_mode((1163, 750))
     # creates a Character from the my_character.py file
     bs = batting_system.BattingSystem(screen)
     sp = sideprof.SideProfile(screen)

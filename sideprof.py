@@ -8,7 +8,7 @@ class SideProfile:
         self.ball = ProfileBall(screen, 110, 600)
         self.pitcher = Pitcher(screen, 700, 700)
         self.background = pygame.image.load("backround.png")
-        self.image = pygame.transform.scale(self.image, (200, 200))
+        self.background = pygame.transform.scale(self.background, (1438 * 0.67, 1122 * 0.67))
     def draw(self):
         self.screen.blit(self.background, (200,0))
         # self.bat.move()
