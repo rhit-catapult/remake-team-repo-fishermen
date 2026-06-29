@@ -8,7 +8,7 @@ class BattingSystem:
         pygame.draw.rect(self.screen, (220,220,220), (50,475,120,120))
 
 class Bat:
-    def __init__(self, screen, (x=70, y=70), BatSystem.bat.png):
+    def __init__(self, screen, (70, 70), BatSystem.bat.png):
         """ Creates a Cloud sprite that will produce Raindrop objects.  The cloud will be moving around. """
         self.screen = screen 
         self.x = x
