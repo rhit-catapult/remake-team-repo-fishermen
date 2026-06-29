@@ -3,6 +3,7 @@ import sys
 import batting_system
 import random
 import time
+import sideprof
 
 
 def main():
@@ -15,6 +16,7 @@ def main():
     screen = pygame.display.set_mode((1000, 750))
     # creates a Character from the my_character.py file
     bs = batting_system.BattingSystem(screen)
+    sp = sideprof.SideProfile(screen)
 
     # let's set the framerate
     clock = pygame.time.Clock()
@@ -34,6 +36,7 @@ def main():
 
         # draws the character every frame
         bs.draw()
+        sp.draw()
         # TODO: Add your project code
 
         # don't forget the update, otherwise nothing will show up!
