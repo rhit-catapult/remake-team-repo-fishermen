@@ -25,7 +25,9 @@ def main():
                 sys.exit()
 
             # TODO: Add you events code
-
+            if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_SPACE: 
+                    print("Score", bs.get_bat_ball_distance())
 
         # TODO: Fill the screen with whatever background color you like!
         screen.fill((255, 255, 255))

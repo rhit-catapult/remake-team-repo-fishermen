@@ -11,7 +11,9 @@ class BattingSystem:
         self.bat.move()
         self.bat.draw()
         self.ball.draw()
-        self.ball.move()
+        # self.ball.move() 
+    def get_bat_ball_distance(self):
+        return abs(self.ball.x - self.bat.x)
 class Bat:
     def __init__(self, screen, x, y):
         self.screen = screen
