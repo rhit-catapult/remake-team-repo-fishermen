@@ -35,7 +35,7 @@ class Bat:
         self.screen = screen
         self.x = x
         self.y = y
-        self.speed = 4
+        self.speed = 5
         self.is_moving = False
         self.image = pygame.image.load("BatSystem.bat.png")
         self.image = pygame.transform.scale(self.image, (200, 200))
