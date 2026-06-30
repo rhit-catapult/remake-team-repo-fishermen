@@ -36,12 +36,14 @@ def main():
                 keys_pressed = pygame.key.get_pressed()
                 if keys_pressed[pygame.K_p]:
                     sp.pitcher.image_to_show = 2
+                    sp.batter.image_to_show = 1
 
             if event.type == pygame.KEYUP: 
 
                 if event.key == pygame.K_p:
                     sp.pitch()
                     bs.pitch()
+                
                 
 
                 if event.key == pygame.K_SPACE: 
@@ -52,6 +54,7 @@ def main():
             print("bs.get_distance", bs.get_bat_ball_distance())
             sp.reset()
             bs.reset()
+            sp.batter.image_to_show = 2
 
         # TODO: Fill the screen with whatever background color you like!
         screen.fill((255, 255, 255))
