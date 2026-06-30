@@ -28,8 +28,20 @@ def main():
 
             # TODO: Add you events code
             if event.type == pygame.KEYDOWN: 
+
+                keys_pressed = pygame.key.get_pressed()
+                if keys_pressed[pygame.K_p]:
+                    sp.pitch()
+                    bs.pitch()
+
                 if event.key == pygame.K_SPACE: 
                     print("Score", bs.get_bat_ball_distance())
+                    bs.swing()
+
+        if sp.is_ball_to_batter():
+            print("bs.get_distance", bs.get_bat_ball_distance())
+            sp.reset()
+            bs.reset()
 
         # TODO: Fill the screen with whatever background color you like!
         screen.fill((255, 255, 255))
