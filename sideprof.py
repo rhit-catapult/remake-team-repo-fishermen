@@ -18,10 +18,13 @@ class SideProfile:
         self.ball.speed = 4
         self.is_ball_moving = True
 
-    def reset(self):
-        self.ball.speed = -10
+    def reset(self, did_batter_swing):
+        if did_batter_swing:
+            self.batter.image_to_show = 2
+            self.ball.speed = -10
+        else:
+            pass
         self.pitcher.image_to_show = 1
-        self.batter.image_to_show = 1
 
     def draw(self):
         self.screen.blit(self.background, (200,0))
@@ -31,7 +34,7 @@ class SideProfile:
                 self.is_ball_moving = False
         self.ball.draw()
         
-        pygame.draw.line(self.screen, (128,0,0), (280,200), (280,1200), 5)
+        # pygame.draw.line(self.screen, (128,0,0), (280,200), (280,1200), 5)
         self.pitcher.draw()
         self.batter.draw()
 
@@ -64,7 +67,8 @@ class ProfileBall:
         self.speed = 3
 
     def draw(self):
-        self.screen.blit(self.image, (self.x - 80, self.y - 50)) 
+        if self.x > 280:
+            self.screen.blit(self.image, (self.x - 80, self.y - 50)) 
 
     def move(self): 
         self.x -= self.speed

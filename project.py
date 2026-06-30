@@ -18,6 +18,7 @@ def main():
     bs = batting_system.BattingSystem(screen)
     sp = sideprof.SideProfile(screen)
     sb = scoreboard.Scoreboard(screen)
+    did_batter_swing = False
 
     # let's set the framerate
     clock = pygame.time.Clock()
@@ -32,29 +33,23 @@ def main():
                 if event.key == pygame.K_SPACE: 
                     print("Score", bs.get_bat_ball_distance())
                     bs.swing()
+                    did_batter_swing = True
 
                 keys_pressed = pygame.key.get_pressed()
                 if keys_pressed[pygame.K_p]:
                     sp.pitcher.image_to_show = 2
                     sp.batter.image_to_show = 1
 
-            if event.type == pygame.KEYUP: 
-
+            if event.type == pygame.KEYUP:
                 if event.key == pygame.K_p:
                     sp.pitch()
+                    did_batter_swing = False
                     bs.pitch()
-                
-                
-
-                if event.key == pygame.K_SPACE: 
-                    print("Score", bs.get_bat_ball_distance())
-                    bs.swing()
 
         if sp.is_ball_to_batter():
-            print("bs.get_distance", bs.get_bat_ball_distance())
-            sp.reset()
+            print(bs.bat.is_moving, "bs.get_distance", bs.get_bat_ball_distance())
+            sp.reset(did_batter_swing)
             bs.reset()
-            sp.batter.image_to_show = 2
 
         # TODO: Fill the screen with whatever background color you like!
         screen.fill((255, 255, 255))
