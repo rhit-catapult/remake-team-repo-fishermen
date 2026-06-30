@@ -65,5 +65,5 @@ class Ball:
             self.screen.blit(self.image, (self.x - 8, self.y - 8))    
 
     def move(self): 
-        self.x = random.randint(38, 162)
-        self.y = random.randint(483, 587)
+        self.x = random.randint(34, 166)
+        self.y = random.randint(479, 591)
