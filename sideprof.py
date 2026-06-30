@@ -13,12 +13,14 @@ class SideProfile:
 
 
     def pitch(self):
+        self.pitcher.image_to_show = 3
         self.ball.x = 820
         self.ball.speed = 3
         self.is_ball_moving = True
 
     def reset(self):
         self.ball.speed = -10
+        self.pitcher.image_to_show = 1
 
     def draw(self):
         self.screen.blit(self.background, (200,0))
@@ -64,7 +66,7 @@ class Pitcher:
     def __init__(self, screen):
         self.screen = screen
         self.speed = 4
-        self.image_to_show = 3
+        self.image_to_show = 1
         self.image1 = pygame.image.load("pitcherbeforethrow.png")
         self.image1 = pygame.transform.scale(self.image1, (200,266))
         self.image2 = pygame.image.load("pitchermidthrow.png")
