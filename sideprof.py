@@ -6,7 +6,7 @@ class SideProfile:
         self.screen = screen
         self.batter = Batter(screen, 110, 675)
         self.ball = ProfileBall(screen, 820, 600)
-        self.pitcher = Pitcher(screen, 700, 700)
+        self.pitcher = Pitcher(screen)
         self.background = pygame.image.load("backround.png")
         self.background = pygame.transform.scale(self.background, (1438 * 0.67, 1122 * 0.67))
         self.is_ball_moving = False
@@ -21,8 +21,6 @@ class SideProfile:
         self.ball.speed = -10
 
     def draw(self):
-
-
         self.screen.blit(self.background, (200,0))
         if self.is_ball_moving:
             self.ball.move()
@@ -31,7 +29,8 @@ class SideProfile:
         self.ball.draw()
         
         # pygame.draw.line(self.screen, (128,0,0), (280,200), (280,1200), 5)
-        #self.pitch.draw()
+        self.pitcher.draw()
+
     def is_ball_to_batter(self):
         return self.ball.x < 280
     
@@ -62,13 +61,20 @@ class ProfileBall:
 
 
 class Pitcher:
-    def __init__(self, screen, x, y):
+    def __init__(self, screen):
         self.screen = screen
-        self.x = x
-        self.y = y
         self.speed = 4
-        self.image = pygame.image.load("pitcher.png")
+        self.image_to_show = 1
+        self.image1 = pygame.image.load("pitcherbeforethrow.png")
+        self.image1 = pygame.transform.scale(self.image1, (200,266))
+        self.image2 = pygame.image.load("pitchermidthrow.png")
+        self.image3 = pygame.image.load("pitcherafterthrow.png")
 
     def draw(self):
-        self.screen.blit(self.image, (self.x, self.y))    
+        if self.image_to_show == 1:
+            self.screen.blit(self.image1, (825, 300))    
+        if self.image_to_show == 2:
+            self.screen.blit(self.image1, (self.x, self.y))    
+        if self.image_to_show == 3:
+            self.screen.blit(self.image1, (self.x, self.y))    
     
