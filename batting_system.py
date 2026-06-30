@@ -6,8 +6,9 @@ class BattingSystem:
         self.screen = screen
         self.bat = Bat(screen, 110, 675)
         self.ball = Ball(screen, 110, 600)
+        
     def draw(self):
-        pygame.draw.rect(self.screen, (220,220,220), (50,475,120,120))
+        pygame.draw.rect(self.screen, (220,220,220), (30,475,140,120))
         self.bat.move()
         self.bat.draw()
         self.ball.draw()
@@ -47,7 +48,7 @@ class Bat:
             self.x += self.speed
             if self.x > (175):
                 self.speed = -self.speed
-            if self.x < (50):
+            if self.x < (25):
                 self.speed = -self.speed
 
 class Ball:
@@ -64,5 +65,5 @@ class Ball:
             self.screen.blit(self.image, (self.x - 8, self.y - 8))    
 
     def move(self): 
-        self.x = random.randint(58, 162)
+        self.x = random.randint(38, 162)
         self.y = random.randint(483, 587)
