@@ -25,6 +25,12 @@ class BattingSystem:
         self.ball.is_visible = False
         self.bat.is_moving = False
     
+    def get_score(self):
+
+        
+
+        return 100 - 2*self.get_bat_ball_distance()
+
     def get_bat_ball_distance(self):
         if self.bat.is_moving:
             return 100
