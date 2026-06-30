@@ -3,6 +3,7 @@ import sys
 import batting_system
 import random
 import time
+import sideprof
 
 
 def main():
@@ -12,9 +13,10 @@ def main():
     # create a screen
     pygame.display.set_caption("Cool Project")
     # TODO: Change the size of the screen as you see fit!
-    screen = pygame.display.set_mode((1000, 750))
+    screen = pygame.display.set_mode((1163, 750))
     # creates a Character from the my_character.py file
     bs = batting_system.BattingSystem(screen)
+    sp = sideprof.SideProfile(screen)
 
     # let's set the framerate
     clock = pygame.time.Clock()
@@ -26,14 +28,27 @@ def main():
 
             # TODO: Add you events code
             if event.type == pygame.KEYDOWN: 
+
+                keys_pressed = pygame.key.get_pressed()
+                if keys_pressed[pygame.K_p]:
+                    sp.pitch()
+                    bs.pitch()
+
                 if event.key == pygame.K_SPACE: 
                     print("Score", bs.get_bat_ball_distance())
+                    bs.swing()
+
+        if sp.is_ball_to_batter():
+            print("bs.get_distance", bs.get_bat_ball_distance())
+            sp.reset()
+            bs.reset()
 
         # TODO: Fill the screen with whatever background color you like!
         screen.fill((255, 255, 255))
 
         # draws the character every frame
         bs.draw()
+        sp.draw()
         # TODO: Add your project code
 
         # don't forget the update, otherwise nothing will show up!
