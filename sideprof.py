@@ -4,7 +4,7 @@ import random
 class SideProfile:
     def __init__(self, screen: pygame.Surface):
         self.screen = screen
-        self.batter = Batter(screen, 110, 675)
+        self.batter = Batter(screen)
         self.ball = ProfileBall(screen, 820, 600)
         self.pitcher = Pitcher(screen)
         self.background = pygame.image.load("backround.png")
@@ -15,7 +15,7 @@ class SideProfile:
     def pitch(self):
         self.pitcher.image_to_show = 3
         self.ball.x = 820
-        self.ball.speed = 3
+        self.ball.speed = 4
         self.is_ball_moving = True
 
     def reset(self):
@@ -32,21 +32,26 @@ class SideProfile:
         
         # pygame.draw.line(self.screen, (128,0,0), (280,200), (280,1200), 5)
         self.pitcher.draw()
+        self.batter.draw()
 
     def is_ball_to_batter(self):
         return self.ball.x < 280
     
 class Batter:
-    def __init__(self, screen, x, y):
+    def __init__(self, screen):
         self.screen = screen
-        self.x = x
-        self.y = y
-        self.speed = 4
-        self.image = pygame.image.load("BatSystem.bat.png")
-
+    
+        self.image_to_show = 1
+        self.image1 = pygame.image.load("batterbeforeswing.png")
+        self.image1 = pygame.transform.scale(self.image1, (200,266))
+        self.image2 = pygame.image.load("batterafterswing.png")
+        self.image2 = pygame.transform.scale(self.image2, (245,310))
     def draw(self):
-        self.screen.blit(self.image, (self.x - 100, self.y - 100))    
-
+        if self.image_to_show == 1:
+            self.screen.blit(self.image1, (250, 490))    
+        if self.image_to_show == 2:
+            self.screen.blit(self.image2, (250, 455))  
+      
 class ProfileBall:
     def __init__(self, screen, x, y):
         self.screen = screen
@@ -65,7 +70,6 @@ class ProfileBall:
 class Pitcher:
     def __init__(self, screen):
         self.screen = screen
-        self.speed = 4
         self.image_to_show = 1
         self.image1 = pygame.image.load("pitcherbeforethrow.png")
         self.image1 = pygame.transform.scale(self.image1, (200,266))
