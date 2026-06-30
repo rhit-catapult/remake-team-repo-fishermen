@@ -4,7 +4,7 @@ import batting_system
 import random
 import time
 import sideprof
-
+import scoreboard
 
 def main():
     # turn on pygame
@@ -17,6 +17,7 @@ def main():
     # creates a Character from the my_character.py file
     bs = batting_system.BattingSystem(screen)
     sp = sideprof.SideProfile(screen)
+    sb = scoreboard.Scoreboard(screen)
 
     # let's set the framerate
     clock = pygame.time.Clock()
@@ -58,7 +59,7 @@ def main():
         # draws the character every frame
         bs.draw()
         sp.draw()
-        # TODO: Add your project code
+        sb.draw()
 
         # don't forget the update, otherwise nothing will show up!
         pygame.display.update()

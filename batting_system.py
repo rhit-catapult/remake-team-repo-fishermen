@@ -46,9 +46,9 @@ class Bat:
     def move(self):
         if self.is_moving:
             self.x += self.speed
-            if self.x > (175):
+            if self.x > 170:
                 self.speed = -self.speed
-            if self.x < (25):
+            if self.x < 30:
                 self.speed = -self.speed
 
 class Ball:
