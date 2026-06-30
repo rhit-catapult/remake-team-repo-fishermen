@@ -28,11 +28,20 @@ def main():
 
             # TODO: Add you events code
             if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_SPACE: 
+                    print("Score", bs.get_bat_ball_distance())
+                    bs.swing()
 
                 keys_pressed = pygame.key.get_pressed()
                 if keys_pressed[pygame.K_p]:
+                    sp.pitcher.image_to_show = 2
+
+            if event.type == pygame.KEYUP: 
+
+                if event.key == pygame.K_p:
                     sp.pitch()
                     bs.pitch()
+                
 
                 if event.key == pygame.K_SPACE: 
                     print("Score", bs.get_bat_ball_distance())
