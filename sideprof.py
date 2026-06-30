@@ -54,7 +54,7 @@ class ProfileBall:
         self.speed = 3
 
     def draw(self):
-        self.screen.blit(self.image, (self.x - 8, self.y - 8)) 
+        self.screen.blit(self.image, (self.x - 80, self.y - 50)) 
 
     def move(self): 
         self.x -= self.speed
@@ -64,17 +64,19 @@ class Pitcher:
     def __init__(self, screen):
         self.screen = screen
         self.speed = 4
-        self.image_to_show = 1
+        self.image_to_show = 3
         self.image1 = pygame.image.load("pitcherbeforethrow.png")
         self.image1 = pygame.transform.scale(self.image1, (200,266))
         self.image2 = pygame.image.load("pitchermidthrow.png")
+        self.image2 = pygame.transform.scale(self.image2, (245,310))
         self.image3 = pygame.image.load("pitcherafterthrow.png")
+        self.image3 = pygame.transform.scale(self.image3, (230,305))
 
     def draw(self):
         if self.image_to_show == 1:
-            self.screen.blit(self.image1, (825, 300))    
+            self.screen.blit(self.image1, (750, 490))    
         if self.image_to_show == 2:
-            self.screen.blit(self.image1, (self.x, self.y))    
+            self.screen.blit(self.image2, (755, 455))    
         if self.image_to_show == 3:
-            self.screen.blit(self.image1, (self.x, self.y))    
+            self.screen.blit(self.image3, (690, 440))    
     
