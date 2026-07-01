@@ -12,6 +12,7 @@ def main():
     pygame.mixer.init()
 
     bat_sound = pygame.mixer.Sound("sounds/bat_crack_wood.mp3")
+    
     # TODO: change the normal volume for the bat crack sound!
     bat_sound_volume = 0.6
     bat_sound.set_volume(bat_sound_volume)

@@ -28,9 +28,10 @@ class SideProfile:
             if score <= 51:
                 # a really low score is a strike - the ball just disappears
                 self.ball.is_visible = False
-            elif score >= 97:
+            elif score >= 92:
                 # !HOMERUN! - send it to the highest point
                 self.ball.vertical_speed = 6
+                self.ball.speed = -6
             else:
                 # mid range hit - the higher the score, the higher it goes
                 # TODO: change how high mid range hits go!
