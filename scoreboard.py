@@ -11,7 +11,7 @@ class Scoreboard:
         self.score_font = pygame.font.SysFont("stencil", 15)
 
         all_fonts = pygame.font.get_fonts()
-        print(sorted(all_fonts))
+        # print(sorted(all_fonts))
     
     def draw(self):
         caption = self.total_font.render(f"Total: {self.total}", True, (0,0,0))
