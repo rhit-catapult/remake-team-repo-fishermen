@@ -1,4 +1,5 @@
 import pygame
+import random
 import button_module
 
 class Scoreboard:
@@ -14,17 +15,24 @@ class Scoreboard:
         # Hall of Fame: list of [score, name] entries, best rounds ever
         self.hall_of_fame = []
         # TODO: we're testing 7 to see how many names actually fit!
-        self.hall_of_fame_size = 5
+        self.hall_of_fame_size = 4
 
         self.current_name = "AAA"
 
         self.pitch_icon = pygame.image.load("Baseball.png")
         self.pitch_icon = pygame.transform.scale(self.pitch_icon, (22, 22))
 
-        # how far off each pitch's swing was, one entry per pitch thrown this round
+        # one entry per pitch thrown this round
         self.pitch_distances = []
+        self.pitch_scores = []
+
         self.crosshairs_icon = pygame.image.load("crosshairs.png")
-        self.crosshairs_icon = pygame.transform.scale(self.crosshairs_icon, (16, 16))
+        self.crosshairs_icon = pygame.transform.scale(self.crosshairs_icon, (32, 32))
+        # gold crosshairs for homeruns, red for strikes - hits just use the normal icon
+        self.crosshairs_homerun = self.crosshairs_icon.copy()
+        self.crosshairs_homerun.fill((255, 215, 0), special_flags=pygame.BLEND_RGB_ADD)
+        self.crosshairs_strike = self.crosshairs_icon.copy()
+        self.crosshairs_strike.fill((200, 0, 0), special_flags=pygame.BLEND_RGB_ADD)
 
         # centered above the batting box, which spans x=30-170, y=475-595
         self.restart_button = button_module.TextButton(
@@ -33,13 +41,15 @@ class Scoreboard:
 
         self.total_font = pygame.font.SysFont("stencil", 32)
         self.score_font = pygame.font.SysFont("stencil", 15)
-        self.hof_font = pygame.font.SysFont("stencil", 10)
+        self.hof_font = pygame.font.SysFont("stencil", 18)
         # names were too small at the regular score_font size, so triple it just for the Hall of Fame entries
-        self.hof_entry_font = pygame.font.SysFont("stencil", 15 * 3)
+        self.hof_entry_font = pygame.font.SysFont("stencil", 14 * 3)
 
         self.hit_text = ""
         self.hit_text_frames = 0
         self.hit_text_font = pygame.font.SysFont("stencil", 90)
+        # the !HOMERUN! text is twice the size of Hit!/STRIKE, and flashes rainbow colors
+        self.homerun_text_font = pygame.font.SysFont("stencil", 90 * 2)
 
         all_fonts = pygame.font.get_fonts()
         # print(sorted(all_fonts))
@@ -49,6 +59,7 @@ class Scoreboard:
         self.total += points
         self.pitch_count += 1
         self.pitch_distances.append(distance)
+        self.pitch_scores.append(points)
         if self.pitch_count >= self.pitches_per_round:
             self.hall_of_fame.append([self.total, self.current_name])
             self.hall_of_fame.sort(reverse=True)
@@ -60,6 +71,7 @@ class Scoreboard:
         self.pitch_count = 0
         self.total = 0
         self.pitch_distances = []
+        self.pitch_scores = []
 
     def add_letter(self, letter):
         self.current_name = (self.current_name + letter)[-3:]
@@ -85,31 +97,43 @@ class Scoreboard:
 
         # 5 baseballs evenly spaced in a line - filled in as pitches happen
         icon_size = 22
-        icon_y = 145
-        # TODO: change how far the crosshairs can travel above the baseball!
-        max_crosshair_offset = 40
+        icon_y = 170
+        # TODO: change how far the crosshairs sit from the ball for hits and strikes!
+        closest_hit_offset = 8
+        farthest_hit_offset = 40
+        strike_offset = 45
         for i in range(self.pitches_per_round):
             icon_center_x = 10 + 180 * (i + 0.5) / self.pitches_per_round
             icon_x = icon_center_x - icon_size // 2
             if i < self.pitch_count:
                 self.screen.blit(self.pitch_icon, (icon_x, icon_y))
 
-                # crosshairs sit above the baseball - farther away the bat missed
-                # the ball, the higher up the crosshairs are, so you can see how
-                # far off that pitch was, graphically, at a glance
-                distance = self.pitch_distances[i]
-                offset = min(distance, 140) / 140 * max_crosshair_offset
-                crosshairs_x = icon_center_x - 8
-                crosshairs_y = icon_y - offset - 16
-                self.screen.blit(self.crosshairs_icon, (crosshairs_x, crosshairs_y))
+                # crosshairs sit above the baseball - a homerun lands right on
+                # the ball, a hit sits closer the higher the score, and a
+                # strike sits the farthest away, so you can see how each
+                # pitch went, graphically, at a glance
+                score = self.pitch_scores[i]
+                if score >= 97:
+                    crosshairs_icon = self.crosshairs_homerun
+                    offset = 0
+                elif score >= 52:
+                    crosshairs_icon = self.crosshairs_icon
+                    offset = farthest_hit_offset - (score - 52) / (96 - 52) * (farthest_hit_offset - closest_hit_offset)
+                else:
+                    crosshairs_icon = self.crosshairs_strike
+                    offset = strike_offset
+
+                crosshairs_x = icon_center_x - 16
+                crosshairs_y = icon_y - offset - 32
+                self.screen.blit(crosshairs_icon, (crosshairs_x, crosshairs_y))
             else:
                 pygame.draw.circle(self.screen, (180, 180, 180), (int(icon_center_x), icon_y + icon_size // 2), icon_size // 2, 2)
 
         caption = self.score_font.render(f"Currently at Bat: {self.current_name}", True, (0,0,0))
-        self.screen.blit(caption, (100 - caption.get_width() // 2, 175))
+        self.screen.blit(caption, (100 - caption.get_width() // 2, 200))
 
         # Hall of Fame panel, left side, top N highest scores first
-        hof_panel_rect = pygame.Rect(10, 200, 180, 190)
+        hof_panel_rect = pygame.Rect(10, 225, 180, 165)
         pygame.draw.rect(self.screen, (255, 250, 205), hof_panel_rect)
         pygame.draw.rect(self.screen, (0, 0, 0), hof_panel_rect, 3)
 
@@ -132,5 +156,12 @@ class Scoreboard:
             self.hit_text_frames -= 1
             center_x = self.screen.get_width() // 2
             center_y = self.screen.get_height() // 2
-            caption = self.hit_text_font.render(self.hit_text, True, (255, 0, 0))
+            if self.hit_text == "!HOMERUN!":
+                # alternating rainbow - a new random color every frame
+                r = random.randint(0, 255)
+                g = random.randint(0, 255)
+                b = random.randint(0, 255)
+                caption = self.homerun_text_font.render(self.hit_text, True, (r, g, b))
+            else:
+                caption = self.hit_text_font.render(self.hit_text, True, (255, 0, 0))
             self.screen.blit(caption, (center_x - caption.get_width() // 2, center_y - caption.get_height() // 2))

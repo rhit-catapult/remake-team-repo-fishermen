@@ -12,6 +12,9 @@ def main():
     pygame.mixer.init()
 
     bat_sound = pygame.mixer.Sound("sounds/bat_crack_wood.mp3")
+    # TODO: change the normal volume for the bat crack sound!
+    bat_sound_volume = 0.6
+    bat_sound.set_volume(bat_sound_volume)
 
     pygame.mixer.music.load("sounds/ballpark_organ.mp3")
     pygame.mixer.music.set_volume(0.5)
@@ -77,8 +80,14 @@ def main():
             if need_to_handle_score:
                 distance = bs.get_bat_ball_distance()
                 if did_batter_swing:
+                    score = bs.get_score()
+                    if score >= 97:
+                        # !HOMERUN! - play the bat crack 1.6 times louder
+                        bat_sound.set_volume(min(1.0, bat_sound_volume * 1.6))
+                    else:
+                        bat_sound.set_volume(bat_sound_volume)
                     bat_sound.play()
-                    sb.record_pitch(bs.get_score(), distance)
+                    sb.record_pitch(score, distance)
                 else:
                     sb.record_pitch(0, distance)
                 sp.reset(did_batter_swing, sb.score)
