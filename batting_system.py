@@ -17,7 +17,7 @@ class BattingSystem:
         self.score_display_frames = 90  # about 1.5 seconds at 60 frames per second
 
     def draw(self):
-        pygame.draw.rect(self.screen, (220,220,220), (30,475,140,120))
+        pygame.draw.rect(self.screen, (200,200,200), (30,475,140,120))
         self.bat.move()
         self.bat.draw()
         self.ball.draw()
@@ -40,9 +40,6 @@ class BattingSystem:
         self.bat.is_moving = False
     
     def get_score(self):
-
-        
-
         return 100 - 2*self.get_bat_ball_distance()
 
     def get_bat_ball_distance(self):

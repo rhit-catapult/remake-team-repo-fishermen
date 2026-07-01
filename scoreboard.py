@@ -36,14 +36,14 @@ class Scoreboard:
 
         # centered above the batting box, which spans x=30-170, y=475-595
         self.restart_button = button_module.TextButton(
-            screen, center_x=100, center_y=420, text="New Round",
+            screen, center_x=100, center_y=430, text="New Round",
             font_size=18, padding=10)
 
-        self.total_font = pygame.font.SysFont("stencil", 32)
-        self.score_font = pygame.font.SysFont("stencil", 18)
+        self.total_font = pygame.font.SysFont("stencil", 40)
+        self.score_font = pygame.font.SysFont("stencil", 22)
         self.hof_font = pygame.font.SysFont("stencil", 18)
         # names were too small at the regular score_font size, so triple it just for the Hall of Fame entries
-        self.hof_entry_font = pygame.font.SysFont("stencil", 14 * 3)
+        self.hof_entry_font = pygame.font.SysFont("stencil", 13 * 3)
 
         self.hit_text = ""
         self.hit_text_frames = 0
@@ -100,8 +100,8 @@ class Scoreboard:
         caption = self.score_font.render(f"score: {self.score}", True, (0,0,0))
         self.screen.blit(caption, (100 - caption.get_width() // 2, 50))
 
-        caption = self.score_font.render("Pitch Counter:", True, (0,0,0))
-        self.screen.blit(caption, (100 - caption.get_width() // 2, 70))
+        # caption = self.score_font.render("Pitch Counter:", True, (0,0,0))
+        # self.screen.blit(caption, (100 - caption.get_width() // 2, 70))
 
         # 5 baseballs evenly spaced in a line - filled in as pitches happen
         icon_size = 22
@@ -152,7 +152,7 @@ class Scoreboard:
         for i, entry in enumerate(self.hall_of_fame[:self.hall_of_fame_size]):
             entry_score = entry[0]
             entry_name = entry[1]
-            caption = self.hof_entry_font.render(f"{i + 1}. {entry_score}  {entry_name}", True, (0,0,0))
+            caption = self.hof_entry_font.render(f"{i + 1}.  {entry_score}  {entry_name}", True, (0,0,0))
             self.screen.blit(caption, (hof_panel_rect.x + 10, y))
             y += caption.get_height() + 5
 

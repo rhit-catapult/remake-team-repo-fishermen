@@ -40,15 +40,17 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
 
-            # TODO: Add you events code
             if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_DOWN: 
+                    sb.restart_round()
+                    sp.batter.image_to_show = 1
+
                 if event.key == pygame.K_SPACE: 
                     print("Score", bs.get_bat_ball_distance())
                     bs.swing()
                     did_batter_swing = True
                     need_to_handle_score = True
             
-
                 keys_pressed = pygame.key.get_pressed()
                 if keys_pressed[pygame.K_UP]:
                     if not sb.is_round_over():
@@ -97,7 +99,7 @@ def main():
                 need_to_handle_score = False
             bs.reset()
 
-        screen.fill((255, 255, 255))
+        screen.fill((230, 230, 230))
 
         # draws every frame
         bs.draw()
