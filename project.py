@@ -14,6 +14,7 @@ def main():
     bat_sound = pygame.mixer.Sound("sounds/bat_crack_wood.mp3")
 
     pygame.mixer.music.load("sounds/ballpark_organ.mp3")
+    pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
     # create a screen
@@ -45,23 +46,42 @@ def main():
             
 
                 keys_pressed = pygame.key.get_pressed()
-                if keys_pressed[pygame.K_p]:
-                    sp.pitcher.image_to_show = 2
-                    sp.batter.image_to_show = 1
-                    did_batter_swing = False
-                    need_to_handle_score = False
+                if keys_pressed[pygame.K_UP]:
+                    if not sb.is_round_over():
+                        sp.pitcher.image_to_show = 2
+                        sp.batter.image_to_show = 1
+                        did_batter_swing = False
+                        need_to_handle_score = False
+
+                # typing a batter name works any time, using any letter key
+                if pygame.K_a <= event.key <= pygame.K_z:
+                    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    letter = alphabet[event.key - pygame.K_a]
+                    sb.add_letter(letter)
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_p:
-                    sp.pitch()
-                    bs.pitch()
+                if event.key == pygame.K_UP:
+                    if not sb.is_round_over():
+                        sp.pitch()
+                        bs.pitch()
+                        # a pitch is now on its way and needs to be scored,
+                        # even if the batter never swings (a no-swing is a 0)
+                        need_to_handle_score = True
 
-        if sp.is_ball_to_batter(): 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if sb.restart_button.is_clicked_by(event.pos):
+                    sb.restart_round()
+
+        if sp.is_ball_to_batter():
             if need_to_handle_score:
                 sp.reset(did_batter_swing)
-                bat_sound.play()
-                sb.total += bs.get_score()
-                sb.score = bs.get_score()
+                distance = bs.get_bat_ball_distance()
+                if did_batter_swing:
+                    bat_sound.play()
+                    sb.record_pitch(bs.get_score(), distance)
+                else:
+                    sb.record_pitch(0, distance)
+                bs.show_score(sb.score)
                 need_to_handle_score = False
             bs.reset()
 

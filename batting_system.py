@@ -6,13 +6,27 @@ class BattingSystem:
         self.screen = screen
         self.bat = Bat(screen, 110, 675)
         self.ball = Ball(screen, 110, 600)
-        
+
+        self.score_to_show = 0
+        # TODO: change how long the big score number stays on screen (in frames, 60 per second)!
+        self.score_display_frames = 0
+        self.big_score_font = pygame.font.SysFont("stencil", 70)
+
+    def show_score(self, score):
+        self.score_to_show = score
+        self.score_display_frames = 90  # about 1.5 seconds at 60 frames per second
+
     def draw(self):
         pygame.draw.rect(self.screen, (220,220,220), (30,475,140,120))
         self.bat.move()
         self.bat.draw()
         self.ball.draw()
-    
+
+        if self.score_display_frames > 0:
+            self.score_display_frames -= 1
+            caption = self.big_score_font.render(str(self.score_to_show), True, (200, 0, 0))
+            self.screen.blit(caption, (100 - caption.get_width() // 2, 535 - caption.get_height() // 2))
+
     def pitch(self):
         self.ball.move()
         self.ball.is_visible = True
