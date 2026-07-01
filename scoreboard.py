@@ -14,8 +14,15 @@ class Scoreboard:
 
         # Hall of Fame: list of [score, name] entries, best rounds ever
         self.hall_of_fame = []
+        # self.hall_of_fame.append([500, "DSF"])
+        # self.hall_of_fame.append([490, "DSF"])
+        # self.hall_of_fame.append([480, "DSF"])
+        # self.hall_of_fame.append([470, "DSF"])
+        # self.hall_of_fame.append([460, "DSF"])
+
+
         # TODO: we're testing 7 to see how many names actually fit!
-        self.hall_of_fame_size = 4
+        self.hall_of_fame_size = 5
 
         self.current_name = "AAA"
 
@@ -105,7 +112,7 @@ class Scoreboard:
 
         # 5 baseballs evenly spaced in a line - filled in as pitches happen
         icon_size = 22
-        icon_y = 150
+        icon_y = 130
         # TODO: change how far the crosshairs sit from the ball for hits and strikes!
         closest_hit_offset = 8
         farthest_hit_offset = 40
@@ -138,10 +145,10 @@ class Scoreboard:
                 pygame.draw.circle(self.screen, (180, 180, 180), (int(icon_center_x), icon_y + icon_size // 2), icon_size // 2, 2)
 
         caption = self.score_font.render(f"Currently at Bat: {self.current_name}", True, (0,0,0))
-        self.screen.blit(caption, (100 - caption.get_width() // 2, 200))
+        self.screen.blit(caption, (100 - caption.get_width() // 2, 175))
 
         # Hall of Fame panel, left side, top N highest scores first
-        hof_panel_rect = pygame.Rect(10, 225, 180, 165)
+        hof_panel_rect = pygame.Rect(10, 200, 180, 190)
         pygame.draw.rect(self.screen, (255, 250, 205), hof_panel_rect)
         pygame.draw.rect(self.screen, (0, 0, 0), hof_panel_rect, 3)
 
@@ -153,7 +160,7 @@ class Scoreboard:
             entry_score = entry[0]
             entry_name = entry[1]
             caption = self.hof_entry_font.render(f"{i + 1}.  {entry_score}  {entry_name}", True, (0,0,0))
-            self.screen.blit(caption, (hof_panel_rect.x + 10, y))
+            self.screen.blit(caption, (hof_panel_rect.x + 15, y))
             y += caption.get_height() + 5
 
         # Restart Round button
