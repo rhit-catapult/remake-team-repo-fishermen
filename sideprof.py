@@ -15,13 +15,26 @@ class SideProfile:
     def pitch(self):
         self.pitcher.image_to_show = 3
         self.ball.x = 820
+        self.ball.y = self.ball.start_y
         self.ball.speed = 4
+        self.ball.vertical_speed = 0
+        self.ball.is_visible = True
         self.is_ball_moving = True
 
-    def reset(self, did_batter_swing):
+    def reset(self, did_batter_swing, score):
         if did_batter_swing:
             self.batter.image_to_show = 2
             self.ball.speed = -10
+            if score <= 51:
+                # a really low score is a strike - the ball just disappears
+                self.ball.is_visible = False
+            elif score >= 97:
+                # !HOMERUN! - send it to the highest point
+                self.ball.vertical_speed = 6
+            else:
+                # mid range hit - the higher the score, the higher it goes
+                # TODO: change how high mid range hits go!
+                self.ball.vertical_speed = 1 + (score - 52) / (96 - 52) * 4
         else:
             pass
         self.pitcher.image_to_show = 1
@@ -63,15 +76,19 @@ class ProfileBall:
         self.screen = screen
         self.x = x
         self.y = y
+        self.start_y = y
         self.image = pygame.image.load("Baseball.png")
         self.speed = 3
+        self.vertical_speed = 0
+        self.is_visible = True
 
     def draw(self):
-        if self.x > 280:
-            self.screen.blit(self.image, (self.x - 80, self.y - 50)) 
+        if self.x > 280 and self.is_visible:
+            self.screen.blit(self.image, (self.x - 80, self.y - 50))
 
-    def move(self): 
+    def move(self):
         self.x -= self.speed
+        self.y -= self.vertical_speed
 
 
 class Pitcher:

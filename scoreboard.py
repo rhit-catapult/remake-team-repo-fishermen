@@ -14,7 +14,7 @@ class Scoreboard:
         # Hall of Fame: list of [score, name] entries, best rounds ever
         self.hall_of_fame = []
         # TODO: we're testing 7 to see how many names actually fit!
-        self.hall_of_fame_size = 7
+        self.hall_of_fame_size = 5
 
         self.current_name = "AAA"
 
@@ -33,9 +33,13 @@ class Scoreboard:
 
         self.total_font = pygame.font.SysFont("stencil", 32)
         self.score_font = pygame.font.SysFont("stencil", 15)
-        self.hof_font = pygame.font.SysFont("stencil", 18)
+        self.hof_font = pygame.font.SysFont("stencil", 10)
         # names were too small at the regular score_font size, so triple it just for the Hall of Fame entries
         self.hof_entry_font = pygame.font.SysFont("stencil", 15 * 3)
+
+        self.hit_text = ""
+        self.hit_text_frames = 0
+        self.hit_text_font = pygame.font.SysFont("stencil", 90)
 
         all_fonts = pygame.font.get_fonts()
         # print(sorted(all_fonts))
@@ -59,6 +63,15 @@ class Scoreboard:
 
     def add_letter(self, letter):
         self.current_name = (self.current_name + letter)[-3:]
+
+    def show_hit_result(self, score):
+        if score >= 97:
+            self.hit_text = "!HOMERUN!"
+        elif score >= 52:
+            self.hit_text = "Hit!"
+        else:
+            self.hit_text = "STRIKE"
+        self.hit_text_frames = 90  # about 1.5 seconds at 60 frames per second
 
     def draw(self):
         caption = self.total_font.render(f"Total: {self.total}", True, (0,0,0))
@@ -113,3 +126,11 @@ class Scoreboard:
 
         # Restart Round button
         self.restart_button.draw()
+
+        # drawn last so it always shows up on top of everything else
+        if self.hit_text_frames > 0:
+            self.hit_text_frames -= 1
+            center_x = self.screen.get_width() // 2
+            center_y = self.screen.get_height() // 2
+            caption = self.hit_text_font.render(self.hit_text, True, (255, 0, 0))
+            self.screen.blit(caption, (center_x - caption.get_width() // 2, center_y - caption.get_height() // 2))

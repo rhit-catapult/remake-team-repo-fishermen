@@ -18,7 +18,7 @@ def main():
     pygame.mixer.music.play(-1)
 
     # create a screen
-    pygame.display.set_caption("Cool Project")
+    pygame.display.set_caption("Ballpark Blast")
     # TODO: Change the size of the screen as you see fit!
     screen = pygame.display.set_mode((1163, 750))
     # creates a Character from the my_character.py file
@@ -71,17 +71,19 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if sb.restart_button.is_clicked_by(event.pos):
                     sb.restart_round()
+                    sp.batter.image_to_show = 1
 
         if sp.is_ball_to_batter():
             if need_to_handle_score:
-                sp.reset(did_batter_swing)
                 distance = bs.get_bat_ball_distance()
                 if did_batter_swing:
                     bat_sound.play()
                     sb.record_pitch(bs.get_score(), distance)
                 else:
                     sb.record_pitch(0, distance)
+                sp.reset(did_batter_swing, sb.score)
                 bs.show_score(sb.score)
+                sb.show_hit_result(sb.score)
                 need_to_handle_score = False
             bs.reset()
 
