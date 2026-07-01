@@ -12,7 +12,7 @@ def main():
     pygame.mixer.init()
 
     bat_sound = pygame.mixer.Sound("sounds/bat_crack_wood.mp3")
-
+    
     pygame.mixer.music.load("sounds/ballpark_organ.mp3")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)

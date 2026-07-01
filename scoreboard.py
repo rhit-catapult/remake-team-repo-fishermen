@@ -65,12 +65,16 @@ class Scoreboard:
         self.current_name = (self.current_name + letter)[-3:]
 
     def show_hit_result(self, score):
-        if score >= 97:
+        if score >= 92:
             self.hit_text = "!HOMERUN!"
+            pygame.mixer.Sound("sounds/batterhomerun.mp3").play()
         elif score >= 52:
+            
             self.hit_text = "Hit!"
+            pygame.mixer.Sound("sounds/bat_crack_wood.mp3").play()
         else:
             self.hit_text = "STRIKE"
+            pygame.mixer.Sound("sounds/battermisseffect.mp3").play()
         self.hit_text_frames = 90  # about 1.5 seconds at 60 frames per second
 
     def draw(self):
