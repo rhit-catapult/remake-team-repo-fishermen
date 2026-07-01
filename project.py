@@ -9,6 +9,26 @@ import scoreboard
 def main():
     # turn on pygame
     pygame.init()
+    pygame.mixer.init()
+
+    # try changing these to 1, 2, or 3 to pick a different sound!
+    use_backgroun_sound = 1
+    use_bat_sound = 1
+
+    if use_backgroun_sound == 1:
+        pygame.mixer.music.load("sounds/crowd_ambience_loop.mp3")
+    if use_backgroun_sound == 2:
+        pygame.mixer.music.load("sounds/crowd_chant.mp3")
+    if use_backgroun_sound == 3:
+        pygame.mixer.music.load("sounds/crowd_roar.mp3")
+    pygame.mixer.music.play(-1)
+
+    if use_bat_sound == 1:
+        bat_sound = pygame.mixer.Sound("sounds/bat_crack_wood.mp3")
+    if use_bat_sound == 2:
+        bat_sound = pygame.mixer.Sound("sounds/bat_crack_ball.mp3")
+    if use_bat_sound == 3:
+        bat_sound = pygame.mixer.Sound("sounds/bat_crack_punch.mp3")
 
     # create a screen
     pygame.display.set_caption("Cool Project")
@@ -34,6 +54,7 @@ def main():
                 if event.key == pygame.K_SPACE: 
                     print("Score", bs.get_bat_ball_distance())
                     bs.swing()
+                    bat_sound.play()
                     did_batter_swing = True
                     need_to_handle_score = True
 
