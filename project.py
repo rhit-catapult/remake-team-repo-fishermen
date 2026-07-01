@@ -18,7 +18,7 @@ def main():
     bat_sound.set_volume(bat_sound_volume)
 
     pygame.mixer.music.load("sounds/ballpark_organ.mp3")
-    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
 
     # create a screen
@@ -82,7 +82,7 @@ def main():
                 distance = bs.get_bat_ball_distance()
                 if did_batter_swing:
                     score = bs.get_score()
-                    if score >= 97:
+                    if score >= 90:
                         # !HOMERUN! - play the bat crack 1.6 times louder
                         bat_sound.set_volume(min(1.0, bat_sound_volume * 1.6))
                     else:

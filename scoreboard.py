@@ -79,7 +79,11 @@ class Scoreboard:
     def show_hit_result(self, score):
         if score >= 92:
             self.hit_text = "!HOMERUN!"
-            pygame.mixer.Sound("sounds/batterhomerun.mp3").play()
+            homerun_sound = pygame.mixer.Sound("sounds/batterhomerun.mp3")
+            homerun_sound.set_volume(1.8)
+            homerun_sound.play()
+
+            
         elif score >= 52:
             
             self.hit_text = "Hit!"
