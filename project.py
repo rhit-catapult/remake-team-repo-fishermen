@@ -42,6 +42,7 @@ def main():
                     bs.swing()
                     did_batter_swing = True
                     need_to_handle_score = True
+            
 
                 keys_pressed = pygame.key.get_pressed()
                 if keys_pressed[pygame.K_p]:
@@ -59,7 +60,8 @@ def main():
             if need_to_handle_score:
                 sp.reset(did_batter_swing)
                 bat_sound.play()
-                sb.score += bs.get_score()
+                sb.total += bs.get_score()
+                sb.score = bs.get_score()
                 need_to_handle_score = False
             bs.reset()
 
