@@ -30,7 +30,7 @@ class Scoreboard:
         self.crosshairs_icon = pygame.transform.scale(self.crosshairs_icon, (32, 32))
         # gold crosshairs for homeruns, red for strikes - hits just use the normal icon
         self.crosshairs_homerun = self.crosshairs_icon.copy()
-        self.crosshairs_homerun.fill((255, 215, 0), special_flags=pygame.BLEND_RGB_ADD)
+        self.crosshairs_homerun.fill((150, 150, 0), special_flags=pygame.BLEND_RGB_ADD)
         self.crosshairs_strike = self.crosshairs_icon.copy()
         self.crosshairs_strike.fill((200, 0, 0), special_flags=pygame.BLEND_RGB_ADD)
 
@@ -40,7 +40,7 @@ class Scoreboard:
             font_size=18, padding=10)
 
         self.total_font = pygame.font.SysFont("stencil", 32)
-        self.score_font = pygame.font.SysFont("stencil", 15)
+        self.score_font = pygame.font.SysFont("stencil", 18)
         self.hof_font = pygame.font.SysFont("stencil", 18)
         # names were too small at the regular score_font size, so triple it just for the Hall of Fame entries
         self.hof_entry_font = pygame.font.SysFont("stencil", 14 * 3)
@@ -105,7 +105,7 @@ class Scoreboard:
 
         # 5 baseballs evenly spaced in a line - filled in as pitches happen
         icon_size = 22
-        icon_y = 170
+        icon_y = 150
         # TODO: change how far the crosshairs sit from the ball for hits and strikes!
         closest_hit_offset = 8
         farthest_hit_offset = 40
@@ -132,7 +132,7 @@ class Scoreboard:
                     offset = strike_offset
 
                 crosshairs_x = icon_center_x - 16
-                crosshairs_y = icon_y - offset - 32
+                crosshairs_y = icon_y - offset - 6
                 self.screen.blit(crosshairs_icon, (crosshairs_x, crosshairs_y))
             else:
                 pygame.draw.circle(self.screen, (180, 180, 180), (int(icon_center_x), icon_y + icon_size // 2), icon_size // 2, 2)
@@ -148,7 +148,7 @@ class Scoreboard:
         caption = self.hof_font.render("HALL OF FAME", True, (0,0,0))
         self.screen.blit(caption, (hof_panel_rect.centerx - caption.get_width() // 2, hof_panel_rect.y + 10))
 
-        y = hof_panel_rect.y + 40
+        y = hof_panel_rect.y + 30
         for i, entry in enumerate(self.hall_of_fame[:self.hall_of_fame_size]):
             entry_score = entry[0]
             entry_name = entry[1]
